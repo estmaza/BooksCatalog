@@ -9,7 +9,8 @@ namespace BooksCatalog.BL
     public interface IAuthorService
     {
         Task<AuthorViewModel> Get(int id);
-        void Save(AuthorViewModel author);
+        IEnumerable<AuthorViewModel> GetAll();
+        AuthorViewModel Save(AuthorViewModel author);
         void Delete(int id);
     }
 }

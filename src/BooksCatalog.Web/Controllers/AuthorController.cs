@@ -23,7 +23,7 @@ namespace BooksCatalog.Web.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var model = await _authorService.Get(id);
-            return View("_EditAuthorPartial", model);
+            return PartialView("_EditAuthorPartial", model);
         }
 
         [HttpPost]

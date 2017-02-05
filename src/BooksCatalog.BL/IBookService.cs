@@ -10,11 +10,8 @@ namespace BooksCatalog.BL
     public interface IBookService
     {
         IEnumerable<TableViewModel> GetTable();
-        Book GetBook(int id);
-        Author GetAuthor(int id);
-        void Save(Book book);
-        void Save(Author author);
-        void DeleteBook(int id);
-        void DeleteAuthor(int id);
+        Task<BookViewModel> Get(int id);
+        BookViewModel Save(BookViewModel book);
+        void Delete(int id);
     }
 }

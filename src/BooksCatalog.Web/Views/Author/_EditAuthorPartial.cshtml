@@ -1,21 +1,26 @@
 ﻿@using BooksCatalog.BL.ViewModels
 @model AuthorViewModel
 
-<form asp-action="Save" asp-controller="Author" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" class="form-group">
-    <input asp-for="Id" type="hidden" />
+<div class="col-sm-4 col-sm-offset-4">
+    <form asp-action="Save" asp-controller="Author" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-success="cancelForm('author')" data-ajax-failure="cancelForm('author')" class="form-group">
+        <input asp-for="Id" type="hidden" />
 
-    <label asp-for="FirstName"></label>
-    <input asp-for="FirstName" class="form-control" />
-    <span asp-validation-for="FirstName"></span>
-    <br />
-    <label asp-for="LastName"></label>
-    <input asp-for="LastName" class="form-control" />
-    <span asp-validation-for="LastName"></span>
-    <br />
-    <label asp-for="BooksNum"></label>
-    <input asp-for="BooksNum" class="form-control" disabled />
-    <span asp-validation-for="FirstName"></span>
-    <br />
-    <button type="button" class="btn btn-default" onclick="cancelForm('author')">Cancel</button>
-    <button type="submit" class="btn btn-info">Save</button>
-</form>
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName"></span>
+        <br />
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName"></span>
+        <br />
+        <label asp-for="BooksNum"></label>
+        <input asp-for="BooksNum" class="form-control" disabled />
+        <span asp-validation-for="FirstName"></span>
+        <br />
+        <div class="pull-right">
+            <button type="button" class="btn btn-default" onclick="cancelForm('author')">Cancel</button>
+            <button type="submit" class="btn btn-info">Save</button>
+        </div>       
+    </form>
+</div>
+

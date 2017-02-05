@@ -45,74 +45,94 @@ namespace BooksCatalog.BL
                     Authors = auth            
                 });
             }
-
-
-            //var table = query
-            //    .Select(p => new TableViewModel
-            //    {
-            //        BookId = p.Id,
-            //        Name = p.Name,
-            //        Date = p.Date,
-            //        Raiting = p.Rating,
-            //        Pages = p.Pages,
-            //        Authors = GetAuthors(p.BookAuthors)
-            //    });
             return table;
         }
 
-        //public Dictionary<int, string> GetAuthors(int id)
-        //{
-        //    var authors = new Dictionary<int, string>();
-
-        //    var res = _dbContext.BookAuthors.Include(p => p.Author);
-
-        //    var r = res.Where(p => p.BookId == id);
-
-        //    foreach (var ba in baList)
-        //        authors.Add(ba.Author.Id, $"{ba.Author.FirstName} {ba.Author.LastName}");
-
-        //    return authors;
-        //}
-
-
-        //public Dictionary<int,string> GetAuthors(IEnumerable<BookAuthor> baList)
-        //{
-        //    var authors = new Dictionary<int, string>();
-
-        //    foreach (var ba in baList)
-        //        authors.Add(ba.Author.Id, $"{ba.Author.FirstName} {ba.Author.LastName}");
-
-        //    return authors;
-        //}
-
-        public Author GetAuthor(int id)
+        public async Task<BookViewModel> Get(int id)
         {
-            throw new NotImplementedException();
+            if (id == 0)
+                return new BookViewModel();
+            var model = await _dbContext.Books.FindAsync(id);
+            var authors = _dbContext.BookAuthors.Where(p => p.Book.Equals(model));
+
+            var entity = ToViewModel(model);
+            foreach (var a in authors)
+                entity.AuthorId.Add(a.AuthorId);
+
+            return entity;
         }
 
-        public Book GetBook(int id)
+        public BookViewModel Save(BookViewModel book)
         {
-            throw new NotImplementedException();
+            if (book.Id == 0)
+            {
+                var entity = ToEntity(book);
+                _dbContext.Books.Add(entity);
+
+                foreach (var a in book.AuthorId)
+                    _dbContext.BookAuthors.Add(new BookAuthor { Book = entity, AuthorId = a });
+            }
+            else
+            {
+                var entity = _dbContext.Books.Include("BookAuthors").First(p => p.Id.Equals(book.Id));
+                //var entity = _dbContext.Books.Find(book.Id)
+
+                entity.Name = book.Name;
+                entity.Date = book.Date;
+                entity.Pages = book.Pages;
+                entity.Rating = book.Rating;
+
+                // Update authors
+                var existedIds = entity.BookAuthors.Select(p => p.AuthorId);
+
+                var toAdd = book.AuthorId.Except(existedIds);
+                foreach (var a in toAdd)
+                    _dbContext.BookAuthors.Add(new BookAuthor { Book = entity, AuthorId = a });
+
+                var toRemove = existedIds.Except(book.AuthorId);
+                foreach (var a in toRemove)
+                    _dbContext.BookAuthors.Remove(entity.BookAuthors.Find(p => p.AuthorId == a));                
+            }
+            _dbContext.SaveChanges();
+
+            var savedBook = _dbContext.Books.Last();
+            return ToViewModel(savedBook);
         }
 
-        public void Save(Author author)
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var book = _dbContext.Find<Book>(id);
+            if (book != null)
+            {
+                _dbContext.Books.Remove(book);
+                _dbContext.SaveChanges();
+            }
         }
 
-        public void Save(Book book)
+        private BookViewModel ToViewModel(Book book)
         {
-            throw new NotImplementedException();
+            var model = new BookViewModel
+            {
+                Id = book.Id,
+                Name = book.Name,
+                Date = book.Date,
+                Pages = book.Pages,
+                Rating = book.Rating
+            };
+            return model;
         }
 
-        public void DeleteAuthor(int id)
+        private Book ToEntity(BookViewModel book)
         {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteBook(int id)
-        {
-            throw new NotImplementedException();
+            var model = new Book
+            {
+                Id = book.Id,
+                Name = book.Name,
+                Date = book.Date,
+                Pages = book.Pages,
+                Rating = book.Rating
+            };
+            return model;
         }
     }
 }

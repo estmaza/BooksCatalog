@@ -1,0 +1,47 @@
+﻿@using BooksCatalog.BL.ViewModels
+@model IEnumerable<TableViewModel>
+
+<div id="bookEdit" class="row"></div>
+<div id="authorEdit"class="row" ></div>
+<div class="panel panel-body">    
+    <div class="row">
+        <hr />
+        <div class="pull-right">
+            <button type="button" class="btn btn-default" onclick="editBook(0)">Add Book</button>
+            <button type="button" class="btn btn-default" onclick="editAuthor(0)">Add Author</button>           
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <table id="booksTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Authors</td>
+                    <td>Date</td>
+                    <td>Raiting</td>
+                    <td>Pages</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in Model)
+                {
+                    <tr>
+                        <td><a href="#" class="btn btn-link" onclick="editBook(@m.BookId)">@m.Name</a></td>
+                        <td>
+                            @foreach (var a in m.Authors)
+                            {
+                                <p><a href="#" class="btn btn-link" onclick="editAuthor(@a.Key)">@a.Value</a></p>
+                            }
+                        </td>
+                        <td>@m.Date</td>
+                        <td>@m.Raiting</td>
+                        <td>@m.Pages</td>
+                        <td>Remove</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>    
+</div>

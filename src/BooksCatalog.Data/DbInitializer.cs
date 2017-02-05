@@ -22,10 +22,10 @@ namespace BooksCatalog.Data
 
             var books = new List<Book>
             {
-                new Book {Name = "ASP.NET MVC", Pages = 282, Rating = 9, Date = new DateTime(2015, 9, 3) },
-                new Book {Name = "ASP.NET MVD", Pages = 992, Rating = 8, Date = new DateTime(2016, 8, 4) },
-                new Book {Name = "ASP.NET MVE", Pages = 768, Rating = 7, Date = new DateTime(2017, 7, 5) },
-                new Book {Name = "ASP.NET MVF", Pages = 512, Rating = 6, Date = new DateTime(2018, 6, 6) }
+                new Book {Name = "ASP.NET MVC", Pages = 282, Rating = 9, Date = "09/03/2015" },
+                new Book {Name = "ASP.NET MVD", Pages = 992, Rating = 8, Date = "08/03/2014" },
+                new Book {Name = "ASP.NET MVE", Pages = 768, Rating = 7, Date = "07/03/2013" },
+                new Book {Name = "ASP.NET MVF", Pages = 512, Rating = 6, Date = "06/03/2012" }
             };
 
             foreach (var b in books)

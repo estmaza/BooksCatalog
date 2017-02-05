@@ -1,0 +1,34 @@
+﻿@using BooksCatalog.BL;
+@using BooksCatalog.BL.ViewModels;
+@model BookViewModel
+
+<div class="col-sm-4 col-sm-offset-4">
+    <form asp-action="Save" asp-controller="Books" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-success="cancelForm('book')" data-ajax-failure="cancelForm('book')" class="form-group">
+        <input asp-for="Id" type="hidden" />
+
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name"></span>
+        <br />
+        <label asp-for="Date"></label>
+        <input asp-for="Date" class="form-control" id="datePicker" />
+        <span asp-validation-for="Date"></span>
+        <br />
+        <label asp-for="Rating"></label>
+        <input asp-for="Rating" class="form-control" />
+        <span asp-validation-for="Rating"></span>
+        <br />
+        <label asp-for="Pages"></label>
+        <input asp-for="Pages" class="form-control" />
+        <span asp-validation-for="Pages"></span>
+        <br />
+        <label asp-for="AuthorId"></label>
+        <select asp-for="AuthorId" asp-items="@(new SelectList(Model.Items,"Key","Value"))" class="form-control selectpicker" multiple></select>
+        <span asp-validation-for="AuthorId"></span>
+        <br /><br />
+        <div class="pull-right">
+            <button type="button" class="btn btn-default" onclick="cancelForm('book')">Cancel</button>
+            <button type="submit" class="btn btn-info">Save</button>
+        </div>        
+    </form>
+</div>

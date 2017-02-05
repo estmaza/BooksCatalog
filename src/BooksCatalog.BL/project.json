@@ -3,6 +3,7 @@
 
   "dependencies": {
     "BooksCatalog.Data": "1.0.0-*",
+    "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.1",
     "NETStandard.Library": "1.6.1"
   },
 

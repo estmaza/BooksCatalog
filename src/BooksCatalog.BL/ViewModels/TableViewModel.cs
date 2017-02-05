@@ -11,7 +11,7 @@ namespace BooksCatalog.BL.ViewModels
 
         public string Name { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public Dictionary<int, string> Authors { get; set; }
 

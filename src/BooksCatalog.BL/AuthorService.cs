@@ -27,9 +27,27 @@ namespace BooksCatalog.BL
             return ToViewModel(author);
         }
 
-        public void Save(AuthorViewModel author)
+        public IEnumerable<AuthorViewModel> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbContext.Authors.Select(p => ToViewModel(p));
+        }        
+
+        public AuthorViewModel Save(AuthorViewModel author)
+        {
+            if (author.Id == 0)
+                _dbContext.Authors.Add(ToEntity(author));
+            else
+            {
+                var model = _dbContext.Authors.Find(author.Id);
+
+                model.FirstName = author.FirstName;
+                model.LastName = author.LastName;
+            }
+            _dbContext.SaveChanges();
+
+            if (author.Id == 0)
+                return ToViewModel(_dbContext.Authors.Last());
+            return author;
         }
 
         private AuthorViewModel ToViewModel(Author author)
@@ -39,9 +57,20 @@ namespace BooksCatalog.BL
                 Id = author.Id,
                 FirstName = author.FirstName,
                 LastName = author.LastName,
-                BooksNum = 1000
+                BooksNum = 1000 // TODO Author: written books count
             };
             return model;
         }
+
+        private Author ToEntity(AuthorViewModel author)
+        {
+            var model = new Author
+            {
+                Id = author.Id,
+                FirstName = author.FirstName,
+                LastName = author.LastName
+            };
+            return model;
+        }        
     }
 }

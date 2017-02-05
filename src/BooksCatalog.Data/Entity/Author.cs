@@ -16,13 +16,11 @@ namespace BooksCatalog.Data.Entity
         public int Id { get; set; }
 
         [Required]
-        [StringLength(256)]
-        [Display(Name = "First Name")]
+        [StringLength(50)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(256)]
-        [Display(Name = "Last Name")]
+        [StringLength(50)]
         public string LastName { get; set; }
 
         public List<BookAuthor> BookAuthors { get; set; }

@@ -9,17 +9,9 @@ namespace BooksCatalog.Web.Controllers
 {
     public class HomeController : Controller
     {
-        protected readonly IBookService _bookService;
-
-        public HomeController(IBookService bookSevece)
-        {
-            _bookService = bookSevece;
-        }
-
         public IActionResult Index()
         {
-            var model = _bookService.GetTable();
-            return View(model);
+            return RedirectToAction("Index", "Books");
         }
     }
 }
